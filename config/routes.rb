@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   #put at the bottom because it's very general
   get "/:username" => "users#show", as: :user
   get "/:username/liked" => "users#liked", as: :liked
-  
+  get "/:username/discover" => "users#discover", as: :discover
+  get "/:username/feed" => "users#feed", as: :feed  
   
 
 
