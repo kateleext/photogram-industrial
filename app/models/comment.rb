@@ -19,6 +19,9 @@
 #  fk_rails_...  (photo_id => photos.id)
 #
 class Comment < ApplicationRecord
-  belongs_to :author, class_name: "User"
+  belongs_to :author, class_name: "User", counter_cache: true
   belongs_to :photo
+
+  validates :body, presence: true
+  
 end
