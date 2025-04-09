@@ -7,6 +7,9 @@ Rails.application.routes.draw do
   resources :follow_requests
   resources :comments
   resources :photos
+
+  #put at the bottom because it's very general
+  get "/:username" => "users#show", as: :user
   
   
   
