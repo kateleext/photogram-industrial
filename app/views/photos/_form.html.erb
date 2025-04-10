@@ -13,30 +13,15 @@
 
   <div>
     <%= form.label :image, style: "display: block" %>
-    <%= form.text_field :image %>
-  </div>
-
-  <div>
-    <%= form.label :comments_count, style: "display: block" %>
-    <%= form.number_field :comments_count %>
-  </div>
-
-  <div>
-    <%= form.label :likes_count, style: "display: block" %>
-    <%= form.number_field :likes_count %>
+    <%= form.file_field :image, class:"form-control" %>
   </div>
 
   <div>
     <%= form.label :caption, style: "display: block" %>
-    <%= form.textarea :caption %>
+    <%= form.textarea :caption, class:"form-control"  %>
   </div>
 
   <div>
-    <%= form.label :owner_id, style: "display: block" %>
-    <%= form.text_field :owner_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-outline-primary" %>
   </div>
 <% end %>

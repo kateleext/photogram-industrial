@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   resources :comments
   resources :photos
 
+  post "photos/new" => "photos#new"
+  get "add_like/:photo_id" => "likes#create", as: :add_like
+  get "remove_like/:photo_id" => "likes#destroy", as: :remove_like
+
   #put at the bottom because it's very general
   get "/:username" => "users#show", as: :user
   get "/:username/liked" => "users#liked", as: :liked

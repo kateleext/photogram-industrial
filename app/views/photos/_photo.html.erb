@@ -1,29 +1,67 @@
 <div class="row mb-4">
-    <div class="col-md-6 offset-md-3">
-      <div class="card">
-        <%= image_tag photo.image_url, class: "card-img-top" %>
-        <div class="card-body">
-          <h5 class="card-title"><%= photo.owner.username %></h5>
-          <p class="card-text"><%= photo.caption %></p>
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <%=image_tag photo.owner.avatar_image_url, class: "rounded-circle me-2", width: "36px", height: "36px"%>
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <h5 class="mt-0"><%=photo.owner.username%></h5>
+            <%if current_user == photo.owner%>
+                  <%= link_to edit_photo_path(photo.id), class: "btn btn-link btn-sm text-muted" do%>
+                    <i class="fas fa-edit fa-fw"></i>
+                  <%end%>
+                  <%= link_to photo_path(photo.id), data: {method: :delete}, class: "btn btn-link btn-sm text-muted" do%>
+                    <i class="fas fa-trash fa-fw"></i>
+                  <%end%>
+                <%end%>
+          </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <% photo.comments.each do |comment|%>
-            <li class="list-group-item">
-              <div class="d-flex">
-                <div class="flex-shrink-0">
-                  <%=image_tag comment.author.avatar_image_url, class: "rounded-circle me-2", width: "36px", height: "36px"%>
-                </div>
-                <div class="flex-grow-1 ms-3">
-                  <h5 class="mt-0"><%=comment.author.username%></h5>
-                  <p><%=comment.body%></p>
-                </div>
-              </div>
-            </li>
+        <%= image_tag photo.image_url, class: "img-fluid" %>
+        <%if photo.fans.include?(current_user)%>
+          <%= link_to remove_like_path(photo.id) do%>
+            <i class="fas fa-heart fa-fw me-2"></i>Unlike
           <%end%>
-        </ul>
-        <div class="card-body">
-          <%= render "comments/form", comment: Comment.new(photo_id: photo.id)%>
-        </div>
+        <%else%>
+          <%= link_to add_like_path(photo.id) do%>
+            <i class="fa-regular fa-heart me-2"></i>Like
+          <%end%>
+        <%end%>
+        <p class="card-text"><%= photo.caption %></p>
       </div>
+
+
+      <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <% photo.comments.each do |comment|%>
+          <li class="list-group-item">
+            <div class="d-flex">
+              <div class="flex-shrink-0">
+                <%=image_tag comment.author.avatar_image_url, class: "rounded-circle me-2", width: "36px", height: "36px"%>
+              </div>
+              <div class="flex-grow-1 ms-3">
+                <h5 class="mt-0"><%=comment.author.username%></h5>
+                <%if current_user == comment.author%>
+                  <%= link_to edit_comment_path(comment.id), class: "btn btn-link btn-sm text-muted" do%>
+                    <i class="fas fa-edit fa-fw"></i>
+                  <%end%>
+                  <%= link_to comment_path(comment.id), data: {method: :delete}, class: "btn btn-link btn-sm text-muted" do%>
+                    <i class="fas fa-trash fa-fw"></i>
+                  <%end%>
+                <%end%>
+                <p><%=comment.body%></p>
+                
+              </a>
+            </div>
+          </div>
+        </li>
+      <%end%>
+    </ul>
+    </div>
+    <div class="card-body">
+      <%= render "comments/form", comment: Comment.new(photo_id: photo.id)%>
     </div>
   </div>
+</div>
+</div>

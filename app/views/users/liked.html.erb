@@ -1,8 +1,39 @@
 <div class="row">
   <div class="col-md-6 offset-3">
     <h1>
-      <%= @user.username %>
+      <%=@user.username%>
     </h1>
+
+    
+
+    <div class="mb-4 d-flex justify-content-between">
+      <div>
+        <a class="link-underline link-underline-opacity-0 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#user_<%=@user.id%>_followers" href="#">
+          <span class="font-weight-bold">
+            <%=@user.followers.count%>
+          </span>
+          followers
+        </a>
+      </div>
+
+      <div>
+        <a class="link-underline link-underline-opacity-0 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#user_<%=@user.id%>_following" href="#">
+          <span class="font-weight-bold">
+            <%=@user.leaders.count%>
+          </span>
+          following
+        </a>     
+      </div>
+
+      <div>
+        <a class="link-underline link-underline-opacity-0 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#user_<%=@user.id%>_pending" href="#">
+          <span class="font-weight-bold">
+            <%=@user.pending_leaders.count%>
+          </span>
+          pending
+        </a>
+      </div>
+    </div>
 
     <ul class="nav nav-pills nav-justified">
       <li class="nav-item">
