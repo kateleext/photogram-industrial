@@ -9,9 +9,11 @@ class UsersController < ApplicationController
 
   def feed
     @user = current_user
+    @photos = @user.feed
   end
 
   def discover
     @user = current_user
+    @photos = @user.discover
   end
 end

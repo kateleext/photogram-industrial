@@ -20,13 +20,9 @@
           <%= form.submit "Follow", class: "btn btn-primary" %>
         <% end %>
       <%elsif sent_follow_request.status == "accepted"%>
-        <%=link_to follow_request_path(sent_follow_request.id), method: :delete, data: { turbo: false } do%>
-          <button class="btn btn-primary">Un-follow</button>
-        <%end%>
+        <%=button_to "Un-follow", follow_request_path(sent_follow_request.id), class: "btn btn-primary", method: :delete, data: { turbo: false }%>
       <%else%>
-        <%=link_to follow_request_path(sent_follow_request.id), method: :delete, data: { turbo: false } do%>
-          <button class="btn btn-primary">Un-request</button>
-        <%end%>
+        <%=button_to "Un-request", follow_request_path(sent_follow_request.id), class: "btn btn-primary", method: :delete, data: { turbo: false }%>
       <%end%>
 
       <%received_follow_request = current_user.received_follow_requests.find_by(sender_id: @user.id)%>
@@ -45,7 +41,6 @@
           <button class="btn btn-primary">Decline <%=@user.username%>'s request</button>
         <%end%>
       <%end%>
-
 
     <%end%>
   </div>

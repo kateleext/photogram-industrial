@@ -50,8 +50,8 @@ class User < ApplicationRecord
   has_many :pending_leaders, through: :pending_sent_follow_requests, source: :recipient
   has_many :followers, through: :accepted_received_follow_requests, source: :sender
 
-  has_many :feed, through: :leaders, source: :own_photos
-  has_many :discover, -> { distinct }, through: :leaders, source: :liked_photos
+  has_many :feed, -> { distinct.order(created_at: :desc) }, through: :leaders, source: :own_photos
+  has_many :discover, -> { distinct.order(created_at: :desc) }, through: :leaders, source: :liked_photos
 
   validates :username, presence: true, uniqueness: true
 end
