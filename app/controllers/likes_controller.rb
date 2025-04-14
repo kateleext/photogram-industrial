@@ -21,9 +21,7 @@ class LikesController < ApplicationController
 
   # POST /likes or /likes.json
   def create
-    @like = Like.new
-    @like.fan_id = current_user.id
-    @like.photo_id = params.fetch(:photo_id)
+    @like = Like.new(like_params)
 
     respond_to do |format|
       if @like.save

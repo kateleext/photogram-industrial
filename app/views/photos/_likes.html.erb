@@ -1,0 +1,18 @@
+<%=pluralize(photo.likes.count, "like")%>
+<%like = current_user.likes.find_by(photo: photo)%>
+<%if like != nil%>
+  <div>
+  <%= link_to like, method: :delete do%>
+    <i class="fas fa-heart fa-fw me-2"></i>Un-like
+  </div>
+  <%end%>
+<%else%>
+  <%= form_with(model: photo.likes.build(fan: current_user)) do |form| %>
+    <%= form.hidden_field :fan_id %>
+    <%= form.hidden_field :photo_id %>
+    <%= form.button class: "btn btn-link" do %>
+      <i class="far fa-heart fa-fw"></i>
+      Like
+  <% end %>
+<% end %>
+<%end%>

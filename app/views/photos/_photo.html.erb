@@ -7,7 +7,7 @@
             <%=image_tag photo.owner.avatar_image_url, class: "rounded-circle me-2", width: "36px", height: "36px"%>
           </div>
           <div class="flex-grow-1 ms-3">
-            <h5 class="mt-0"><%=photo.owner.username%></h5>
+            <h5 class="mt-0"><%=link_to photo.owner.username, user_path(photo.owner.username)%></h5>
             <%if current_user == photo.owner%>
                   <%= link_to edit_photo_path(photo.id), class: "btn btn-link btn-sm text-muted" do%>
                     <i class="fas fa-edit fa-fw"></i>
@@ -19,15 +19,7 @@
           </div>
         </div>
         <%= image_tag photo.image_url, class: "img-fluid" %>
-        <%if photo.fans.include?(current_user)%>
-          <%= link_to remove_like_path(photo.id) do%>
-            <i class="fas fa-heart fa-fw me-2"></i>Unlike
-          <%end%>
-        <%else%>
-          <%= link_to add_like_path(photo.id) do%>
-            <i class="fa-regular fa-heart me-2"></i>Like
-          <%end%>
-        <%end%>
+        <%= render "photos/likes", photo: photo%>
         <p class="card-text"><%= photo.caption %></p>
       </div>
 

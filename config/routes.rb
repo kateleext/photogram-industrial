@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "photos#index"
+  root "users#feed"
 
   devise_for :users
 
@@ -8,20 +8,12 @@ Rails.application.routes.draw do
   resources :comments
   resources :photos
 
-  post "photos/new" => "photos#new"
-  get "add_like/:photo_id" => "likes#create", as: :add_like
-  get "remove_like/:photo_id" => "likes#destroy", as: :remove_like
-
   #put at the bottom because it's very general
   get "/:username" => "users#show", as: :user
   get "/:username/liked" => "users#liked", as: :liked
   get "/:username/discover" => "users#discover", as: :discover
   get "/:username/feed" => "users#feed", as: :feed  
   
-
-
-
-
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
