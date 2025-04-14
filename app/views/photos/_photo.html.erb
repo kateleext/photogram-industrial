@@ -33,7 +33,7 @@
                 <%=image_tag comment.author.avatar_image_url, class: "rounded-circle me-2", width: "36px", height: "36px"%>
               </div>
               <div class="flex-grow-1 ms-3">
-                <h5 class="mt-0"><%=comment.author.username%></h5>
+                <h5 class="mt-0"><%=link_to comment.author.username, user_path(comment.author.username)%></h5>
                 <%if current_user == comment.author%>
                   <%= link_to edit_comment_path(comment.id), class: "btn btn-link btn-sm text-muted" do%>
                     <i class="fas fa-edit fa-fw"></i>

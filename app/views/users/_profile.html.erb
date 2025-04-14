@@ -1,0 +1,55 @@
+<div class="d-flex">
+  <%= image_tag current_user.avatar_image_url, class: "rounded-circle me-4", width: "150px", height: "150px"%>
+  <div>
+    <h1>
+      <%=@user.username%>
+    </h1>
+    <%=render "users/numbers", user: @user%>
+    <%if @user != current_user%>
+
+      <%sent_follow_request = @user.received_follow_requests.find_by(sender_id: current_user.id)%>
+      <%if !sent_follow_request%>
+        <%= form_with(model: FollowRequest.new(sender_id: current_user.id, recipient_id: @user.id)) do |form| %>
+          <%= form.hidden_field :sender_id %>
+          <%= form.hidden_field :recipient_id %>
+          <%if @user.private==true%>
+            <%= form.hidden_field :status, value: :pending %>
+          <%else%>
+            <%= form.hidden_field :status, value: :accepted%>
+          <%end%>
+          <%= form.submit "Follow", class: "btn btn-primary" %>
+        <% end %>
+      <%elsif sent_follow_request.status == "accepted"%>
+        <%=link_to follow_request_path(sent_follow_request.id), method: :delete, data: { turbo: false } do%>
+          <button class="btn btn-primary">Un-follow</button>
+        <%end%>
+      <%else%>
+        <%=link_to follow_request_path(sent_follow_request.id), method: :delete, data: { turbo: false } do%>
+          <button class="btn btn-primary">Un-request</button>
+        <%end%>
+      <%end%>
+
+      <%received_follow_request = current_user.received_follow_requests.find_by(sender_id: @user.id)%>
+      <%if !received_follow_request || received_follow_request.status == "accepted" || received_follow_request.status == "rejected"%>
+      <%else%>
+        <%= form_with(model: received_follow_request, method: :patch) do |f|%>
+          <%= f.hidden_field :sender_id, value: received_follow_request.sender_id%>
+          <%= f.hidden_field :recipient_id, value: received_follow_request.recipient_id%>
+          <%= f.hidden_field :status, value: :accepted%>
+          <button class="btn btn-primary">Accept <%=@user.username%>'s request</button>
+        <%end%>
+        <%= form_with(model: received_follow_request, method: :patch) do |f|%>
+          <%= f.hidden_field :sender_id, value: received_follow_request.sender_id%>
+          <%= f.hidden_field :recipient_id, value: received_follow_request.recipient_id%>
+          <%= f.hidden_field :status, value: :rejected%>
+          <button class="btn btn-primary">Decline <%=@user.username%>'s request</button>
+        <%end%>
+      <%end%>
+
+
+    <%end%>
+  </div>
+
+</div>
+
+<hr>
