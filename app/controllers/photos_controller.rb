@@ -22,6 +22,7 @@ class PhotosController < ApplicationController
   # POST /photos or /photos.json
   def create
     @photo = Photo.new(photo_params)
+    @photo.owner = current_user
 
     respond_to do |format|
       if @photo.save
@@ -52,7 +53,7 @@ class PhotosController < ApplicationController
     @photo.destroy!
 
     respond_to do |format|
-      format.html { redirect_to photos_path, status: :see_other, notice: "Photo was successfully destroyed." }
+      format.html { redirect_back fallback_location: root_path, status: :see_other, notice: "Photo was successfully destroyed." }
       format.json { head :no_content }
     end
   end

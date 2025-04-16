@@ -1,0 +1,23 @@
+<div class="modal fade" id="user_<%=@user.id%>_following" data-keyboard="false" tabindex="-1" aria-labelledby="backdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="backdropLabel">
+          <%=@user.username%>'s following
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <ul class="list-group list-group-flush">
+        <%@user.leaders.each do |leader|%>
+          <%=link_to leader.username, user_path(leader.username)%>
+        <%end%>
+  
+      </ul>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-block" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
